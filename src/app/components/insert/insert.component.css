@@ -1,0 +1,25 @@
+.divider:after,
+.divider:before {
+content: "";
+flex: 1;
+height: 1px;
+background: #eee;
+}
+.h-custom {
+height: calc(100% - 73px);
+}
+@media (max-width: 450px) {
+.h-custom {
+height: 100%;
+}
+}
+
+h3{
+    font-family: "Open Sans", sans-serif;
+    color: black;
+}
+
+section{
+    background-image: linear-gradient(to right, #7f3ebb, #3f3ff3,#8A2BE2);
+
+}

@@ -1,0 +1,22 @@
+<button type="button" (click)="onLogoutClick()" class="btn btn-dark p-3 mt-3" style="float: right;">LogOut</button>
+<div id="outer" [@fadeInOut] class="flexbox">
+
+
+    <main *ngFor="let each of notesdata" class="l-card">
+        <section class="l-card__text">
+            <p>
+                {{each.detail}}
+            </p>
+        </section>
+        <section class="l-card__user">
+            <div class="l-card__userInfo">
+                <span>{{each.subject}}</span>
+                <span>{{each.note_date}}</span>
+            </div>
+        </section>
+        <div>
+            <i (click)="onDeleteClick(each.note_id)" style="font-size:3rem;color: red;" class="fas fa-trash-alt"
+                aria-hidden="true"></i>
+        </div>
+    </main>
+</div>
