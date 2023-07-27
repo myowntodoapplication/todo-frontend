@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthComponent } from './components/auth/auth.component';
@@ -12,6 +11,8 @@ import { InsertComponent } from './components/insert/insert.component';
 import { HttpClientModule,HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MyHttpInterceptor } from '../app/components/auth/helper/http-interceptor';
 import { ErrorInterceptor } from '../app/components/auth/helper/error-interceptor';
+import { UpdateComponent } from './components/update/update.component';
+import { ToastComponent } from './components/toast/toast.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,9 @@ import { ErrorInterceptor } from '../app/components/auth/helper/error-intercepto
     LandingComponent,
     DisplayComponent,
     InsertComponent,    
+    UpdateComponent,
+    ToastComponent,
+    
   ],
   imports: [    
     BrowserAnimationsModule,

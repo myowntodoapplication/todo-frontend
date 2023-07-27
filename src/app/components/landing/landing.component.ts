@@ -10,10 +10,10 @@ import { ActivatedRoute, Router, Routes } from '@angular/router';
     trigger('fadeInOut', [
       transition(':enter', [
         style({ opacity: 0 }),
-        animate('500ms', style({ opacity: 1 }))
+        animate('750ms', style({ opacity: 1 }))
       ]),
       transition(':leave', [
-        animate('500ms', style({ opacity: 0 }))
+        animate('750ms', style({ opacity: 0 }))
       ])
     ])
   ]
@@ -30,8 +30,19 @@ export class LandingComponent implements OnInit {
   }
 
   NavigateToInsert() {
-    console.log("insert")
     this.router.navigate(['insert']);
+  }
+
+  NavigateToFilehandle(){
+    this.router.navigate(['filehandle']);
+  }
+  
+  NavigateToBootstrapTest(){
+    this.router.navigate(['bootstraping']);
+  }
+  onLogoutClick() {
+    localStorage.removeItem('user');
+    this.router.navigate(['/auth']);
   }
 
 }

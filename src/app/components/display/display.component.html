@@ -1,15 +1,21 @@
-<div [@fadeInOut] class="container-fluid outer">    
-    <div @[fadeInOut] class="row">
+<div [@fadeInOut] class="container-fluid outer" style="height: 100%;">    
+    <div class="row">
         <div *ngFor="let each of notesdata" class="col-xs-5 col-sm-10 col-lg-5 col-md-5 mx-auto mt-3 mb-3">
             <div class="card element">
                 <div class="card-body">
-                    <h5 class="card-title">{{each.subject}}</h5>
-                    <p class="card-text"> {{each.detail}}</p>
-                    <p class="card-text"> {{each.note_date}}</p>
-                    <i (click)="onDeleteClick(each.note_id)" style="font-size:3rem;color: red;" class="fas fa-trash-alt"
+                    <h3 class="card-title">{{each.subject}}</h3>
+                    <p class="card-text" style="font-size: 1.25rem;"> {{each.detail}}</p>
+                    <p class="card-text" style="font-size: 1.25rem;"> {{each.note_date}}</p>
+                    <i (click)="onDeleteClick(each.note_id)" style="font-size:3rem;" class="fas fa-trash-alt"
                     aria-hidden="true"></i>
+                    <button (click)="onUpdateNoteClick(each.note_id)" class="btn btn-danger mb-4 mx-4">
+                        Update
+                    </button>                                          
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<!-- toaster code -->
+<app-toast [type]="this.type" [show]="this.showtoast" [message]="this.message" [autoCloseDelay]="this.autoCloseDelay"></app-toast>

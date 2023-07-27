@@ -9,4 +9,19 @@
 	background: linear-gradient(145deg, #3f5efb 0%, #fc466b 100%);	
   }
 
+
+  i{
+	color: red;
+  }
+  i:hover{		
+	transition: 0.25s;	
+		transform: scale(1.2);
+		color: maroon;		
+		cursor: pointer;
+  }
   
+  button:hover{
+	transform: scale(1.2);
+	color: darkred;
+	
+  }

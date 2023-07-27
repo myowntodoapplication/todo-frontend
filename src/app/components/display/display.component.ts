@@ -5,6 +5,7 @@ import { InsertService } from 'src/app/shared/insert.service';
 import { DisplayService } from 'src/app/shared/display.service';
 import { Router } from '@angular/router';
 import { getLocaleDayPeriods } from '@angular/common';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @Component({
   selector: 'app-display',
@@ -14,16 +15,20 @@ import { getLocaleDayPeriods } from '@angular/common';
     trigger('fadeInOut', [
       transition(':enter', [
         style({ opacity: 0 }),
-        animate('500ms', style({ opacity: 1 }))
+        animate('750ms', style({ opacity: 1 }))
       ]),
       transition(':leave', [
-        animate('500ms', style({ opacity: 0 }))
+        animate('750ms', style({ opacity: 0 }))
       ])
     ])
   ]
 })
 export class DisplayComponent implements OnInit {
 
+  showtoast: boolean = false;
+  type: any;
+  message: string = '';
+  autoCloseDelay: number = 5000;
   constructor(
     private authservice: AuthserviceService,
     private displayservice: DisplayService,
@@ -52,11 +57,25 @@ export class DisplayComponent implements OnInit {
   }
 
   onDeleteClick(note_id: number) {
-    this.displayservice.service_deleteanote(note_id).subscribe(res => {
+    this.showtoast = false;
+    this.displayservice.service_deleteanote(note_id).subscribe(res => {      
       // console.log(res)      
+      this.message = 'Deleted Successfully';
+          this.type = 'alert-success';
+          this.showtoast = true;
+          setTimeout(() => {
+            this.showtoast = false;
+
+          }, this.autoCloseDelay);
+
       this.fetchDataToDisplay(this.authservice.service_get_user_from_local_storage().user_id);
 
     })
+  }
+
+
+  onUpdateNoteClick(note_id:Number){
+    this.Router.navigate([`/update/${note_id}`]);
   }
 
   onLogoutClick() {
