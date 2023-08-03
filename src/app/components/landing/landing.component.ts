@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { trigger, style, animate, transition } from '@angular/animations';
 import { ActivatedRoute, Router, Routes } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-landing',
@@ -20,7 +21,7 @@ import { ActivatedRoute, Router, Routes } from '@angular/router';
 })
 export class LandingComponent implements OnInit {
 
-  constructor(private router: Router, private route: ActivatedRoute) { }
+  constructor(private router: Router, private route: ActivatedRoute,private toastr:ToastrService) { }
 
   ngOnInit(): void {
   }
@@ -41,6 +42,7 @@ export class LandingComponent implements OnInit {
     this.router.navigate(['bootstraping']);
   }
   onLogoutClick() {
+    this.toastr.success("Logged Out Successfully")
     localStorage.removeItem('user');
     this.router.navigate(['/auth']);
   }

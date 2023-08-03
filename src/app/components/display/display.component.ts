@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { trigger, style, animate, transition } from '@angular/animations';
 import { AuthserviceService } from 'src/app/shared/authservice.service';
-import { InsertService } from 'src/app/shared/insert.service';
 import { DisplayService } from 'src/app/shared/display.service';
 import { Router } from '@angular/router';
-import { getLocaleDayPeriods } from '@angular/common';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-display',
@@ -31,9 +29,9 @@ export class DisplayComponent implements OnInit {
   autoCloseDelay: number = 5000;
   constructor(
     private authservice: AuthserviceService,
-    private displayservice: DisplayService,
-    private insertservice: InsertService,
-    private Router: Router
+    private displayservice: DisplayService,    
+    private Router: Router,
+    private toastr:ToastrService
   ) { }
 
   notesdata: any;
@@ -41,6 +39,7 @@ export class DisplayComponent implements OnInit {
   ngOnInit(): void {
     var object = this.authservice.service_get_user_from_local_storage();
     if (!object) {
+      this.toastr.warning("Unauthorized User Logged Out")
       console.log("Unauthorized User Detected!!! Logged Out")
       this.authservice.service_logout();
     }
@@ -56,17 +55,10 @@ export class DisplayComponent implements OnInit {
     })
   }
 
-  onDeleteClick(note_id: number) {
-    this.showtoast = false;
+  onDeleteClick(note_id: number) {    
     this.displayservice.service_deleteanote(note_id).subscribe(res => {      
       // console.log(res)      
-      this.message = 'Deleted Successfully';
-          this.type = 'alert-success';
-          this.showtoast = true;
-          setTimeout(() => {
-            this.showtoast = false;
-
-          }, this.autoCloseDelay);
+      this.toastr.success("Deleted Successfully")
 
       this.fetchDataToDisplay(this.authservice.service_get_user_from_local_storage().user_id);
 

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Route, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Injectable({
@@ -14,7 +15,8 @@ export class AuthserviceService {
   baseURL = 'http://localhost:2004'
   constructor(
     private http: HttpClient,
-    private Router: Router
+    private Router: Router,
+    private toastr:ToastrService
   ) { }
 
   service_update_user(object: any) {
@@ -37,8 +39,8 @@ export class AuthserviceService {
   }
 
   service_logout() {
-    localStorage.removeItem('user');
-    this.Router.navigate(['/auth']);
+    localStorage.removeItem('user');    
+    this.Router.navigate(['/auth']);    
   }
 
   service_get_user_from_local_storage() {

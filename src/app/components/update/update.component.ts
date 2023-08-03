@@ -4,6 +4,7 @@ import { AuthserviceService } from 'src/app/shared/authservice.service';
 import { NgForm } from '@angular/forms';
 import { InsertService } from 'src/app/shared/insert.service';
 import { Route, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-update',
@@ -29,7 +30,8 @@ export class UpdateComponent implements OnInit {
   autoCloseDelay: number = 5000;
   constructor(private authservice: AuthserviceService,
     private insertservice: InsertService,
-    private Router: Router) {
+    private Router: Router,
+    private toastr:ToastrService) {
 
     this.note_data = {
       detail: "",
@@ -45,6 +47,7 @@ export class UpdateComponent implements OnInit {
   ngOnInit(): void {
     var object = this.authservice.service_get_user_from_local_storage();
     if (!object) {
+      this.toastr.warning("Unauthoruzed User Logged Out")
       console.log("Unauthorized User Detected!!! Logged Out")
       this.authservice.service_logout();
     }
@@ -74,6 +77,7 @@ export class UpdateComponent implements OnInit {
   onUpdateClick(note_id: number) {    
     var object = this.authservice.service_get_user_from_local_storage();
     if (!object) {
+      this.toastr.warning("Unauthorized User Logged Out")
       console.log("Unauthorized User Detected!!! Logged Out")
       this.authservice.service_logout();
     }
@@ -82,29 +86,14 @@ export class UpdateComponent implements OnInit {
       let user_id = object.user_id;
       this.showtoast = false;    
       this.insertservice.service_update({ user_id: user_id, subject: subject, detail: detail, date: date, note_id: note_id }).subscribe((res: any) => {        
-        if (res[0][0].msg) {
-          // console.log("updated");
-          //++++++++++++++++++++++++++++++++++++++
-          this.message = 'Successfully Updated';
-          this.type = 'alert-success';
-          this.showtoast = true;
-          setTimeout(() => {
-            this.showtoast = false;
-          }, this.autoCloseDelay);
-          //++++++++++++++++++++++++++++++++++++++
+        if (res[0][0].msg) {          
+          this.toastr.success("Updated Successfully")
         }
 
-        else {
+        else {          
           //++++++++++++++++++++++++++++++++++++++
-          this.message = 'Not Updated';
-          this.type = 'alert-danger';
-          this.showtoast = true;
-          setTimeout(() => {
-            this.showtoast = false;
-
-          }, this.autoCloseDelay);
-          //++++++++++++++++++++++++++++++++++++++
-          console.log("Not Updated")
+          this.toastr.warning("Not Updated")
+          //++++++++++++++++++++++++++++++++++++++          
         }
       })
     }

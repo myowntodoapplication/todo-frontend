@@ -12,7 +12,7 @@ import { HttpClientModule,HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MyHttpInterceptor } from '../app/components/auth/helper/http-interceptor';
 import { ErrorInterceptor } from '../app/components/auth/helper/error-interceptor';
 import { UpdateComponent } from './components/update/update.component';
-import { ToastComponent } from './components/toast/toast.component';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -21,16 +21,15 @@ import { ToastComponent } from './components/toast/toast.component';
     LandingComponent,
     DisplayComponent,
     InsertComponent,    
-    UpdateComponent,
-    ToastComponent,
-    
+    UpdateComponent,        
   ],
   imports: [    
     BrowserAnimationsModule,
     BrowserModule,
     AppRoutingModule,
     FormsModule,        
-    HttpClientModule
+    HttpClientModule,    
+    ToastrModule.forRoot()
   ],
   providers: [
     {

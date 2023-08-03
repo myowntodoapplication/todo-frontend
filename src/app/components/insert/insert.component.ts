@@ -4,6 +4,8 @@ import { AuthserviceService } from 'src/app/shared/authservice.service';
 import { NgForm } from '@angular/forms';
 import { InsertService } from 'src/app/shared/insert.service';
 import { Route, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+
 @Component({
   selector: 'app-insert',
   templateUrl: './insert.component.html',
@@ -31,11 +33,13 @@ export class InsertComponent implements OnInit {
 
   constructor(private authservice: AuthserviceService,
     private insertservice: InsertService,
-    private Router: Router) { }
+    private Router: Router,
+    private toastr:ToastrService) { }
 
   ngOnInit(): void {
     var object = this.authservice.service_get_user_from_local_storage();
     if (!object) {
+      this.toastr.warning("Unauthorized User Logged Out")
       console.log("Unauthorized User Detected!!! Logged Out")
       this.authservice.service_logout();
     }
@@ -45,14 +49,7 @@ export class InsertComponent implements OnInit {
   onInsertClick() {
 
     if (!this.formRef.value.subject || !this.formRef.value.detail || !this.formRef.value.date) {
-      // console.log("yes")
-      this.showtoast=false;
-      this.message='Fill All Fields';
-        this.type='alert-warning';
-        this.showtoast=true;       
-        setTimeout(() => {
-          this.showtoast=false;
-        }, this.autoCloseDelay);        
+      this.toastr.info("Fill All Fields")
       return;
     }
 
@@ -60,7 +57,7 @@ export class InsertComponent implements OnInit {
 
     var object = this.authservice.service_get_user_from_local_storage();
     if (!object) {
-      console.log("Unauthorized User Detected!!! Logged Out")
+      this.toastr.warning("Unauthorized User Logged Out")      
       this.authservice.service_logout();
     }
     else {
@@ -68,13 +65,7 @@ export class InsertComponent implements OnInit {
       let user_id = object.user_id;
       this.insertservice.service_insert({ user_id: user_id, subject: subject, detail: detail, date: date }).subscribe((res: any) => {
         console.log(res[0][0].msg)
-        this.message='Successfully Inserted';
-        this.type='alert-success';
-        this.showtoast=true;       
-        setTimeout(() => {
-          this.showtoast=false;
-        }, this.autoCloseDelay);        
-        
+        this.toastr.success("Inserted Successfully")
       })
     }
   }
